@@ -20,6 +20,7 @@ from gi.repository import WebKit as webkit
 require_version('Gtk', '3.0')
 from gi.repository import Gtk as gtk
 from gi.repository.GdkPixbuf import Pixbuf
+from gi.repository import Gdk
 from os import stat as os_stat
 import datetime
 import apt
