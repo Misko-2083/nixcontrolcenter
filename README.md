@@ -17,6 +17,7 @@ These are all subject to change during this time.
 * gir1.2-webkit-3.0
 * python3-gi
 * ttf-ubuntu-font-family
+* python3-cairo
 
 
 
