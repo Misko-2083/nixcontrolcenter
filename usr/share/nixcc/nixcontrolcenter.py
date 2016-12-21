@@ -23,6 +23,7 @@ from gi.repository.GdkPixbuf import Pixbuf
 from os import stat as os_stat
 import datetime
 import apt
+import cairo
 
 
 def run_once():
@@ -377,6 +378,12 @@ def frontend_fill():
     return page
 
 
+def area_draw(widget, cr):
+    cr.set_source_rgba(.0, .0, .0, 0.0)
+    cr.set_operator(cairo.OPERATOR_SOURCE)
+    cr.paint()
+    cr.set_operator(cairo.OPERATOR_OVER)
+
 def main():
     global browser
     global window
@@ -385,6 +392,10 @@ def main():
     window.connect('destroy', gtk.main_quit)
     window.set_title(appname)
     window.set_icon(Pixbuf.new_from_file(app_icon))
+    screen = window.get_screen()
+    visual = screen.get_rgba_visual()
+    if visual != None and screen.is_composited():
+        window.set_visual(visual)
     rootsize = tkinter.Tk()
     if rootsize.winfo_screenheight() > 700:
         window.set_resizable(False)
@@ -403,6 +414,10 @@ def main():
     settings = browser.get_settings()
     settings.set_property('enable-default-context-menu', False)
     browser.set_settings(settings)
+    browser.set_transparent(True)
+    browser.override_background_color(gtk.StateFlags.NORMAL, Gdk.RGBA(0,0,0,0))
+    window.set_app_paintable(True)
+    window.connect("draw", area_draw)
     gtk.main()
 
 
